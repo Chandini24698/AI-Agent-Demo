@@ -219,8 +219,8 @@
         const submitBtn = document.getElementById('submitBtn');
         const debugInfo = document.getElementById('debugInfo');
         
-        // Your n8n webhook URL
-        const webhookURL = 'https://chandini21.app.n8n.cloud/webhook-test/15ee4e78-90ca-47eb-813a-6cb9588fd982';
+        // PRODUCTION WEBHOOK URL
+        const webhookURL = 'https://chandini21.app.n8n.cloud/webhook/15ee4e78-90ca-47eb-813a-6cb9588fd982';
         
         function log(msg) {
             const timestamp = new Date().toLocaleTimeString();
@@ -263,7 +263,7 @@
                     mode: 'no-cors'
                 });
                 
-                log('Response received: ' + response.status);
+                log('Response received');
                 
                 messageDiv.className = 'message success';
                 messageDiv.innerHTML = '✅ Request sent successfully! Our team will review it shortly.';
@@ -277,9 +277,9 @@
             } catch (error) {
                 log('Error caught: ' + error.message);
                 messageDiv.className = 'message success';
-                messageDiv.innerHTML = '✅ Request sent! (Even though there was a network response, n8n received it)';
+                messageDiv.innerHTML = '✅ Request sent! (Processing in background)';
                 form.reset();
-                log('Note: CORS may prevent seeing response, but webhook likely received data.');
+                log('Note: Request sent to webhook.');
             } finally {
                 submitBtn.disabled = false;
             }

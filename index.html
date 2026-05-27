@@ -1,34 +1,260 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Eternity Support Request</title>
     <style>
-        body { font-family: Arial; max-width: 600px; margin: 50px auto; }
-        form { background: #f0f0f0; padding: 20px; border-radius: 10px; }
-        input, textarea { width: 100%; padding: 10px; margin: 10px 0; }
-        button { background: #667eea; color: white; padding: 10px 20px; border: none; cursor: pointer; }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        
+        .container {
+            background: white;
+            border-radius: 15px;
+            padding: 40px;
+            max-width: 600px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            width: 100%;
+        }
+        
+        h1 {
+            color: #333;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+        
+        .subtitle {
+            color: #666;
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 14px;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #333;
+            font-weight: 600;
+            font-size: 14px;
+        }
+        
+        input[type="text"],
+        input[type="email"],
+        textarea,
+        select {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-family: Arial, sans-serif;
+            font-size: 14px;
+            transition: border-color 0.3s;
+        }
+        
+        input[type="text"]:focus,
+        input[type="email"]:focus,
+        textarea:focus,
+        select:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+        
+        textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+        
+        button {
+            width: 100%;
+            padding: 14px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
+        }
+        
+        button:active {
+            transform: translateY(0);
+        }
+        
+        button:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+        
+        .message {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+            display: none;
+            font-weight: 600;
+        }
+        
+        .message.success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        
+        .message.error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        
+        .message.loading {
+            background: #d1ecf1;
+            color: #0c5460;
+            border: 1px solid #bee5eb;
+        }
+        
+        .loading-spinner {
+            display: inline-block;
+            width: 14px;
+            height: 14px;
+            border: 2px solid rgba(12, 84, 96, 0.3);
+            border-top-color: #0c5460;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+            margin-right: 8px;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
+        .footer {
+            margin-top: 20px;
+            text-align: center;
+            font-size: 12px;
+            color: #999;
+        }
     </style>
 </head>
 <body>
-    <h1>Eternity Support Request</h1>
-    <form>
-        <label>Your Name:</label>
-        <input type="text" name="name" required>
+    <div class="container">
+        <h1>🏋️ Eternity Support Request</h1>
+        <p class="subtitle">Send us your question or request • AI-powered responses</p>
         
-        <label>Your Email:</label>
-        <input type="email" name="email" required>
+        <form id="supportForm">
+            <div class="form-group">
+                <label for="name">Your Name:</label>
+                <input type="text" id="name" name="name" required placeholder="John Smith">
+            </div>
+            
+            <div class="form-group">
+                <label for="email">Your Email:</label>
+                <input type="email" id="email" name="email" required placeholder="john@example.com">
+            </div>
+            
+            <div class="form-group">
+                <label for="message">Your Message:</label>
+                <textarea id="message" name="message" required placeholder="Tell us what you need..."></textarea>
+            </div>
+            
+            <div class="form-group">
+                <label for="type">Request Type:</label>
+                <select id="type" name="type" required>
+                    <option value="Question">Question (opening hours, prices, etc)</option>
+                    <option value="Action">Action (cancel class, rebook, etc)</option>
+                    <option value="Other">Other</option>
+                </select>
+            </div>
+            
+            <button type="submit" id="submitBtn">Send Request</button>
+        </form>
         
-        <label>Your Message:</label>
-        <textarea name="message" rows="5" required></textarea>
+        <div class="message" id="message"></div>
         
-        <label>Request Type:</label>
-        <select name="type">
-            <option>Question (opening hours, prices, etc)</option>
-            <option>Action (cancel class, rebook, etc)</option>
-            <option>Other</option>
-        </select>
+        <div class="footer">
+            💡 Your request will be processed by our AI system and a team member will review if needed.
+        </div>
+    </div>
+    
+    <script>
+        const form = document.getElementById('supportForm');
+        const messageDiv = document.getElementById('message');
+        const submitBtn = document.getElementById('submitBtn');
         
-        <button type="submit">Send Request</button>
-    </form>
+        // Your n8n webhook URL
+        const webhookURL = 'https://chandini21.app.n8n.cloud/webhook-test/15ee4e78-90ca-47eb-813a-6cb9588fd982';
+        
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            // Get form data
+            const formData = {
+                name: document.getElementById('name').value,
+                email: document.getElementById('email').value,
+                message: document.getElementById('message').value,
+                type: document.getElementById('type').value,
+                timestamp: new Date().toISOString()
+            };
+            
+            // Show loading message
+            messageDiv.className = 'message loading';
+            messageDiv.innerHTML = '<span class="loading-spinner"></span>Processing your request...';
+            messageDiv.style.display = 'block';
+            submitBtn.disabled = true;
+            
+            try {
+                // Send data to n8n webhook
+                const response = await fetch(webhookURL, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(formData)
+                });
+                
+                if (response.ok) {
+                    messageDiv.className = 'message success';
+                    messageDiv.innerHTML = '✅ Request sent successfully! Our team will review it shortly.';
+                    form.reset();
+                    
+                    // Clear message after 5 seconds
+                    setTimeout(() => {
+                        messageDiv.style.display = 'none';
+                    }, 5000);
+                } else {
+                    throw new Error('Server error');
+                }
+            } catch (error) {
+                messageDiv.className = 'message error';
+                messageDiv.innerHTML = '❌ Error sending request. Please try again.';
+                console.error('Error:', error);
+            } finally {
+                submitBtn.disabled = false;
+            }
+        });
+    </script>
 </body>
 </html>
